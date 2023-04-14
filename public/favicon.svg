@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="180"
+   height="180"
+   viewBox="0 0 47.624999 47.625002"
+   version="1.1"
+   id="svg901"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="Favicon.svg"
+   inkscape:export-filename="C:\Users\as-26\YandexDisk\Сайт 2021\Оформление\Favicon_webclip.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
+  <defs
+     id="defs895">
+    <linearGradient
+       y2="-11202.438"
+       x2="3140.5571"
+       y1="-11189.945"
+       x1="3141.5928"
+       gradientTransform="matrix(7.3824999,-1.0146468e-8,1.0146468e-8,7.3824999,-23282.14,82032.094)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient5343"
+       xlink:href="#linearGradient6096"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient6096"
+       inkscape:collect="always">
+      <stop
+         id="stop6092"
+         offset="0"
+         style="stop-color:#0033a0;stop-opacity:1" />
+      <stop
+         id="stop6094"
+         offset="1"
+         style="stop-color:#1a5bd0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.979899"
+     inkscape:cx="0.14551072"
+     inkscape:cy="107.19617"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     units="px" />
+  <metadata
+     id="metadata898">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Слой 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       inkscape:export-ydpi="300"
+       inkscape:export-xdpi="300"
+       transform="matrix(0.26811705,0,0,-0.26811705,51.678629,186.90022)"
+       id="g5358"
+       style="stroke-width:1.31577">
+      <circle
+         inkscape:export-ydpi="300"
+         inkscape:export-xdpi="300"
+         transform="matrix(0.99984769,0.01745244,0.01745244,-0.99984769,0,0)"
+         r="87.827003"
+         cy="-609.99194"
+         cx="-93.301102"
+         id="circle5329"
+         style="opacity:1;fill:url(#linearGradient5343);fill-opacity:1;stroke:none;stroke-width:2.81148;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <g
+         inkscape:export-ydpi="300"
+         inkscape:export-xdpi="300"
+         id="g5341"
+         transform="matrix(5.956661,0,0,-5.956661,-146.17504,8148.1404)"
+         style="stroke-width:1.7839">
+        <path
+           inkscape:connector-curvature="0"
+           id="path5339"
+           style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.629317"
+           d="m 7.0936,1275.8496 c -5.55695,0 -10.06228,-4.5053 -10.06228,-10.0626 0,-3.496 1.78365,-6.5751 4.4884,-8.3792 v 7.1805 c 0,2.1473 0.49212,3.7902 1.47249,4.929 0.98002,1.1387 2.37772,1.7102 4.19065,1.7102 1.75613,0 3.11044,-0.5757 4.06329,-1.7233 0.95321,-1.1483 1.42946,-2.7972 1.42946,-4.9417 v -7.148 c 2.70263,1.8052 4.48063,4.88 4.48063,8.3725 0,5.5573 -4.50639,10.0626 -10.06264,10.0626 m -2.72838,-19.7499 c 0.86819,-0.2427 1.78223,-0.3764 2.72838,-0.3764 0.94122,0 1.84927,0.1316 2.71287,0.3715 v 9.0639 c 0,1.1783 -0.22684,2.008 -0.67593,2.4945 -0.45296,0.4847 -1.0996,0.7292 -1.94698,0.7292 -0.90311,0 -1.59773,-0.2445 -2.08491,-0.7292 -0.48966,-0.4865 -0.73343,-1.3162 -0.73343,-2.4945 z m 2.72662,-2.5622 c -6.76522004,0 -12.2495,5.4832 -12.2495,12.2498 0,6.7653 5.48427996,12.2499 12.2495,12.2499 6.76663,0 12.24986,-5.4846 12.24986,-12.2499 0,-6.7666 -5.48323,-12.2498 -12.24986,-12.2498" />
+      </g>
+    </g>
+  </g>
+</svg>

@@ -9,11 +9,12 @@ interface sprinkler {
   num: number // Порядковый номер дождевальной установки
   center: { x: number; y: number } // Центр установки
   radius: number // Предельный радиус установки
-  startAngle: number // Начальный угол
-  endAngle: number // Конечный угол
-  spanAngle: number // Угол поворота пролёта
+  startOutline: number // Начальный угол контура
+  endOutline: number // Конечный угол угол контура
+  spanAngle: number // Текущее положение пролёта (в градусах)
+  irrigationsStart: number // Начальный угол орошаемой поверхности
+  irrigationEnd: number // Конечный угол орошаемой поверхности
   color: string // Цвет контура маркера установки
-  alpha: number // Прозрачность маркера установки
 }
 
 // Реактивный массив дождевальных машин
@@ -22,31 +23,34 @@ let sprinklers: sprinkler[] = reactive([
     num: 1,
     center: { x: 44.976785, y: 42.001052 },
     radius: 50,
-    startAngle: 0,
-    endAngle: 360,
+    startOutline: 0,
+    endOutline: 360,
     spanAngle: 0,
-    color: '#FF0000',
-    alpha: 0.8
+    irrigationsStart: 45,
+    irrigationEnd: 90,
+    color: '#ff0000'
   },
   {
     num: 2,
     center: { x: 44.975705, y: 42.00193 },
     radius: 50,
-    startAngle: 0,
-    endAngle: 360,
+    startOutline: 0,
+    endOutline: 360,
     spanAngle: 0,
-    color: '#00BFFF',
-    alpha: 0.8
+    irrigationsStart: 45,
+    irrigationEnd: 90,
+    color: '#00bfff'
   },
   {
     num: 3,
     center: { x: 44.975705, y: 42.000173 },
     radius: 50,
-    startAngle: 0,
-    endAngle: 360,
+    startOutline: 0,
+    endOutline: 360,
     spanAngle: 0,
-    color: '#90EE90',
-    alpha: 0.8
+    irrigationsStart: 45,
+    irrigationEnd: 90,
+    color: '#90ee90'
   }
 ])
 
@@ -75,11 +79,10 @@ onMounted(() => {
           sprinkler.num,
           sprinkler.center,
           sprinkler.radius,
-          sprinkler.startAngle,
-          sprinkler.endAngle,
+          sprinkler.startOutline,
+          sprinkler.endOutline,
           sprinkler.spanAngle,
-          sprinkler.color,
-          sprinkler.alpha
+          sprinkler.color
         )
       )
     })
@@ -89,7 +92,6 @@ onMounted(() => {
 })
 
 watch(sprinklers, newValue => {
-  console.log(newValue)
   myMap.geoObjects.removeAll()
 
   newValue.forEach(sprinkler =>
@@ -98,11 +100,10 @@ watch(sprinklers, newValue => {
         sprinkler.num,
         sprinkler.center,
         sprinkler.radius,
-        sprinkler.startAngle,
-        sprinkler.endAngle,
+        sprinkler.startOutline,
+        sprinkler.endOutline,
         sprinkler.spanAngle,
-        sprinkler.color,
-        sprinkler.alpha
+        sprinkler.color
       )
     )
   )
@@ -120,7 +121,6 @@ watch(sprinklers, newValue => {
       <div class="title narrow">Кон. угол</div>
       <div class="title narrow">Угол пролёта</div>
       <div class="title wide">Цвет</div>
-      <div class="title wide">Прозрачность</div>
     </div>
 
     <div v-for="sprinkler in sprinklers" class="row">
@@ -128,11 +128,13 @@ watch(sprinklers, newValue => {
       <input class="input wide" type="text" v-model="sprinkler.center.x" />
       <input class="input wide" type="text" v-model="sprinkler.center.y" />
       <input class="input narrow" type="text" v-model="sprinkler.radius" />
-      <input class="input narrow" type="text" v-model="sprinkler.startAngle" />
-      <input class="input narrow" type="text" v-model="sprinkler.endAngle" />
+      <input
+        class="input narrow"
+        type="text"
+        v-model="sprinkler.startOutline" />
+      <input class="input narrow" type="text" v-model="sprinkler.endOutline" />
       <input class="input narrow" type="text" v-model="sprinkler.spanAngle" />
       <input class="input wide" type="text" v-model="sprinkler.color" />
-      <input class="input wide" type="text" v-model="sprinkler.alpha" />
     </div>
     <div class="map-container">
       <div id="map" class="map"></div>
@@ -171,7 +173,7 @@ watch(sprinklers, newValue => {
 }
 
 .map {
-  width: 1500px;
+  width: 1380px;
   height: 650px;
 }
 

@@ -2,29 +2,29 @@
  * @param center объект с координатами центра
  * @param radius радиус
  * @param ratio количество градусов на одну точку окружности (5 по умолчанию)
- * @param startAngle начальный угол (0 по умолчанию)
- * @param endAngle конечный угол (360 по умолчанию)
+ * @param startOutline начальный угол контура (0 по умолчанию)
+ * @param endOutline конечный угол контура (360 по умолчанию)
  * @returns массив координат контура сектора
  */
 export function getOutlinePoints(
   center: { x: number; y: number },
   length: number,
-  startAngle: number = 0,
-  endAngle: number = 360
+  startOutline: number = 0,
+  endOutline: number = 360
 ) {
-  if (startAngle > endAngle) {
-    startAngle = endAngle
+  if (startOutline > endOutline) {
+    startOutline = endOutline
   }
 
-  endAngle -= startAngle
+  endOutline -= startOutline
 
   const outcome = []
   const { x, y } = center
 
   // Азимут в радианах
-  var firstSide = (Math.PI * (360 - startAngle + 90)) / 180
+  const firstSide = (Math.PI * (360 - startOutline + 90)) / 180
 
-  for (let i = 0; i <= endAngle; i += 5) {
+  for (let i = 0; i <= endOutline; i += 5) {
     const side = firstSide - (Math.PI * i) / 180
     const dir = [Math.sin(side), Math.cos(side)]
     outcome.push(
@@ -32,7 +32,7 @@ export function getOutlinePoints(
     )
   }
 
-  if (startAngle !== 0 || endAngle !== 360) {
+  if (startOutline !== 0 || endOutline !== 360) {
     outcome.push([x, y])
   }
 

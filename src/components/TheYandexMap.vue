@@ -2,6 +2,7 @@
 import { onMounted, reactive } from 'vue'
 import { watch } from 'vue'
 import { getSectorCollection } from '@/services/getSectorCollection'
+import { computed } from '@vue/reactivity'
 
 let myMap: any
 // Реактивный массив дождевальных машин
@@ -11,14 +12,18 @@ let sprinklers = reactive([
     radius: 50,
     ratio: 5,
     startAngle: 0,
-    endAngle: 360
+    endAngle: 360,
+    color: '#ff0000',
+    alpha: 1
   },
   {
     center: { x: 44.9764, y: 42.001052 },
     radius: 50,
     ratio: 5,
     startAngle: 0,
-    endAngle: 360
+    endAngle: 360,
+    color: '#ff0000',
+    alpha: 1
   }
 ])
 
@@ -46,9 +51,10 @@ onMounted(() => {
         getSectorCollection(
           sprinkler.center,
           sprinkler.radius,
-          sprinkler.ratio,
           sprinkler.startAngle,
-          sprinkler.endAngle
+          sprinkler.endAngle,
+          sprinkler.color,
+          sprinkler.alpha
         )
       )
     })
@@ -66,9 +72,10 @@ watch(sprinklers, newValue => {
       getSectorCollection(
         sprinkler.center,
         sprinkler.radius,
-        sprinkler.ratio,
         sprinkler.startAngle,
-        sprinkler.endAngle
+        sprinkler.endAngle,
+        sprinkler.color,
+        sprinkler.alpha
       )
     )
   )
@@ -78,14 +85,18 @@ watch(sprinklers, newValue => {
 <template>
   <div class="container">
     <div v-for="sprinkler in sprinklers" class="input-container">
-      <input class="input" type="text" v-model="sprinkler.center.x" />
-      <input class="input" type="text" v-model="sprinkler.center.y" />
-      <input class="input" type="text" v-model="sprinkler.radius" />
-      <input class="input" type="text" v-model="sprinkler.ratio" />
-      <input class="input" type="text" v-model="sprinkler.startAngle" />
-      <input class="input" type="text" v-model="sprinkler.endAngle" />
+      <input class="input wide" type="text" v-model="sprinkler.center.x" />
+      <input class="input wide" type="text" v-model="sprinkler.center.y" />
+      <input class="input narrow" type="text" v-model="sprinkler.radius" />
+      <input class="input narrow" type="text" v-model="sprinkler.startAngle" />
+      <input class="input narrow" type="text" v-model="sprinkler.endAngle" />
+      <input class="input wide" type="text" v-model="sprinkler.color" />
+      <input class="input narrow" type="text" v-model="sprinkler.alpha" />
     </div>
-    <div id="map" style="width: 1200px; height: 800px"></div>
+    <div class="map-container">
+      <div id="map" style="width: 1200px; height: 800px"></div>
+    </div>
+    <div></div>
   </div>
 </template>
 
@@ -104,11 +115,26 @@ watch(sprinklers, newValue => {
   flex-direction: row;
   justify-content: center;
   gap: 10px;
+  margin-bottom: 20px;
+}
+
+.map-container {
+  display: flex;
+  justify-content: center;
 }
 
 .input {
-  width: 200px;
   height: 50px;
   font-size: 30px;
+  text-align: center;
+  border-radius: 12px;
+}
+
+.wide {
+  width: 200px;
+}
+
+.narrow {
+  width: 100px;
 }
 </style>

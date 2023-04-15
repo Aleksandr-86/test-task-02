@@ -9,12 +9,9 @@
 export function getOutlinePoints(
   center: { x: number; y: number },
   length: number,
-  ratio: number = 5,
   startAngle: number = 0,
   endAngle: number = 360
 ) {
-  if (ratio < 1) ratio = 90
-  if (ratio > 90) ratio = 90
   if (startAngle > endAngle) {
     startAngle = endAngle
   }
@@ -27,7 +24,7 @@ export function getOutlinePoints(
   // Азимут в радианах
   var firstSide = (Math.PI * (360 - startAngle + 90)) / 180
 
-  for (let i = 0; i <= endAngle; i += ratio) {
+  for (let i = 0; i <= endAngle; i += 5) {
     const side = firstSide - (Math.PI * i) / 180
     const dir = [Math.sin(side), Math.cos(side)]
     outcome.push(

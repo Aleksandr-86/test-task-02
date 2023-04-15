@@ -2,28 +2,51 @@
 import { onMounted, reactive } from 'vue'
 import { watch } from 'vue'
 import { getSectorCollection } from '@/services/getSectorCollection'
-import { computed } from '@vue/reactivity'
 
 let myMap: any
+
+interface sprinkler {
+  num: number // Порядковый номер дождевальной установки
+  center: { x: number; y: number } // Центр установки
+  radius: number // Предельный радиус установки
+  startAngle: number // Начальный угол
+  endAngle: number // Конечный угол
+  spanAngle: number // Угол поворота пролёта
+  color: string // Цвет контура маркера установки
+  alpha: number // Прозрачность маркера установки
+}
+
 // Реактивный массив дождевальных машин
-let sprinklers = reactive([
+let sprinklers: sprinkler[] = reactive([
   {
-    center: { x: 44.976065, y: 42.001052 },
+    num: 1,
+    center: { x: 44.976785, y: 42.001052 },
     radius: 50,
-    ratio: 5,
     startAngle: 0,
     endAngle: 360,
-    color: '#ff0000',
-    alpha: 1
+    spanAngle: 0,
+    color: '#FF0000',
+    alpha: 0.8
   },
   {
-    center: { x: 44.9764, y: 42.001052 },
+    num: 2,
+    center: { x: 44.975705, y: 42.00193 },
     radius: 50,
-    ratio: 5,
     startAngle: 0,
     endAngle: 360,
-    color: '#ff0000',
-    alpha: 1
+    spanAngle: 0,
+    color: '#00BFFF',
+    alpha: 0.8
+  },
+  {
+    num: 3,
+    center: { x: 44.975705, y: 42.000173 },
+    radius: 50,
+    startAngle: 0,
+    endAngle: 360,
+    spanAngle: 0,
+    color: '#90EE90',
+    alpha: 0.8
   }
 ])
 
@@ -49,10 +72,12 @@ onMounted(() => {
     sprinklers.forEach(sprinkler => {
       myMap.geoObjects.add(
         getSectorCollection(
+          sprinkler.num,
           sprinkler.center,
           sprinkler.radius,
           sprinkler.startAngle,
           sprinkler.endAngle,
+          sprinkler.spanAngle,
           sprinkler.color,
           sprinkler.alpha
         )
@@ -70,10 +95,12 @@ watch(sprinklers, newValue => {
   newValue.forEach(sprinkler =>
     myMap.geoObjects.add(
       getSectorCollection(
+        sprinkler.num,
         sprinkler.center,
         sprinkler.radius,
         sprinkler.startAngle,
         sprinkler.endAngle,
+        sprinkler.spanAngle,
         sprinkler.color,
         sprinkler.alpha
       )
@@ -84,19 +111,32 @@ watch(sprinklers, newValue => {
 
 <template>
   <div class="container">
-    <div v-for="sprinkler in sprinklers" class="input-container">
+    <div class="row">
+      <div class="title narrow">№ п/п</div>
+      <div class="title wide">Координата X</div>
+      <div class="title wide">Координата Y</div>
+      <div class="title narrow">Радиус</div>
+      <div class="title narrow">Нач. угол</div>
+      <div class="title narrow">Кон. угол</div>
+      <div class="title narrow">Угол пролёта</div>
+      <div class="title wide">Цвет</div>
+      <div class="title wide">Прозрачность</div>
+    </div>
+
+    <div v-for="sprinkler in sprinklers" class="row">
+      <input class="input narrow" type="text" v-model="sprinkler.num" />
       <input class="input wide" type="text" v-model="sprinkler.center.x" />
       <input class="input wide" type="text" v-model="sprinkler.center.y" />
       <input class="input narrow" type="text" v-model="sprinkler.radius" />
       <input class="input narrow" type="text" v-model="sprinkler.startAngle" />
       <input class="input narrow" type="text" v-model="sprinkler.endAngle" />
+      <input class="input narrow" type="text" v-model="sprinkler.spanAngle" />
       <input class="input wide" type="text" v-model="sprinkler.color" />
-      <input class="input narrow" type="text" v-model="sprinkler.alpha" />
+      <input class="input wide" type="text" v-model="sprinkler.alpha" />
     </div>
     <div class="map-container">
-      <div id="map" style="width: 1200px; height: 800px"></div>
+      <div id="map" class="map"></div>
     </div>
-    <div></div>
   </div>
 </template>
 
@@ -110,12 +150,19 @@ watch(sprinklers, newValue => {
   height: 100vh;
 }
 
-.input-container {
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+}
+
+.row {
   display: flex;
   flex-direction: row;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .map-container {
@@ -123,11 +170,20 @@ watch(sprinklers, newValue => {
   justify-content: center;
 }
 
+.map {
+  width: 1500px;
+  height: 650px;
+}
+
 .input {
   height: 50px;
   font-size: 30px;
   text-align: center;
   border-radius: 12px;
+}
+
+.input:focus {
+  outline-color: red;
 }
 
 .wide {

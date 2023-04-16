@@ -17,7 +17,7 @@ interface sprinkler {
   irrigationPoint: number // Угол начала орошения
   irrigationStart: number // Начальный угол орошаемой поверхности, градус
   irrigationEnd: number // Конечный угол орошаемой поверхности, градус
-  color: string // Цвет контура маркера установки
+  color: string // Цвет контура установки
   state: string // Состояние дождевальной установки
 }
 

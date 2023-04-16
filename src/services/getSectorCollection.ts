@@ -91,7 +91,7 @@ export function getSectorCollection(
 
   sectorCollection.add(externalCircle)
 
-  // Контур сектора
+  // Контур метки 
   const outline = new ymaps.Polygon(
     [[...getOutlinePoints(center, radius, startOutline, endOutline)]],
     {
@@ -127,7 +127,7 @@ export function getSectorCollection(
 
   sectorCollection.add(span)
 
-  // Маркер начала орошаемой поверхности
+  // Метка начала орошаемой поверхности
   const irrigationMarkerPoints = [
     ...getOutlinePoints(center, radius - 1, irrigationPoint, irrigationPoint)
   ]

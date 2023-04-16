@@ -1,9 +1,9 @@
 /**
  * @param center объект с координатами центра
  * @param radius радиус
- * @param startOutline начальный угол контура (0 по умолчанию)
- * @param endOutline конечный угол контура (360 по умолчанию)
- * @returns массив координат контура сектора
+ * @param startOutline начальный угол контура
+ * @param endOutline конечный угол контура
+ * @returns массив координат контура метки
  */
 export function getOutlinePoints(
   center: { x: number; y: number },

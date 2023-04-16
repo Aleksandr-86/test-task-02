@@ -120,7 +120,10 @@ onMounted(() => {
 
     myMap.events.add('click', () => {
       ballon.state = false
-      myBalloon.close()
+
+      if (myBalloon) {
+        myBalloon.close()
+      }
     })
 
     // Добавление дождевальных машин на карту

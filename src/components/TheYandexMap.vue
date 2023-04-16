@@ -58,7 +58,7 @@ let sprinklers: sprinkler[] = reactive([
     state: `
     <p>Состояние: <span style="color: #00cc00; font-weight: bold;">ИСПРАВНА</span></p> 
     <p>Угловая скорость, град/мин: 5</p>
-    <p>Направление движения: по часовой стрелке</p>
+    <p>Направление движения: против часовой стрелки</p>
     <p>Начало работы: 09:11</p>
     <p>В работе: 00:28</p>
     <p>Вод. питание: автономное</p>
@@ -107,6 +107,7 @@ onMounted(() => {
 
     myMap.events.add('click', () => {
       ballon.state = false
+      myBalloon.close()
     })
 
     // Добавление дождевальных машин на карту
@@ -272,15 +273,5 @@ watch(sprinklers, newValue => {
 
 .narrow {
   width: 100px;
-}
-
-.red {
-  color: hsl(0, 100%, 50%);
-  font-weight: bold;
-}
-
-.green {
-  color: #00cc00;
-  font-weight: bold;
 }
 </style>

@@ -1,12 +1,16 @@
 import { getOutlinePoints } from '@/services/getOutlinePoints'
+import { ballon } from '@/store'
 
 /**
  * @param index индекс коллекции
  * @param center объект с координатами центра
  * @param radius радиус
- * @param startOutline начальный угол контура (0 по умолчанию)
- * @param endOutline конечный угол контура (360 по умолчанию)
- * @param spanAngle текущее положение пролёта (в градусах)
+ * @param startOutline начальный угол контура
+ * @param endOutline конечный угол контура
+ * @param spanAngle текущее положение пролёта
+ * @param irrigationPoint угол начал орошения
+ * @param irrigationStart начальный угол орошаемой поверхности
+ * @param irrigationEnd конечный угол орошаемой поверхности
  * @param color цвет контура
  * @returns коллекцию объектов
  */
@@ -17,6 +21,9 @@ export function getSectorCollection(
   startOutline: number,
   endOutline: number,
   spanAngle: number,
+  irrigationPoint: number,
+  irrigationStart: number,
+  irrigationEnd: number,
   color: string
 ) {
   // Коллекция
@@ -33,9 +40,9 @@ export function getSectorCollection(
     color = '#000000'
   }
 
-  // Внутренний центральный круг
+  // Внутренний круг
   const innerCircle = new ymaps.Circle(
-    [[x, y], 4],
+    [[x, y], 2],
     {
       hintContent: 'Дождевальная установка № ' + index
     },
@@ -44,15 +51,15 @@ export function getSectorCollection(
       fill: true,
       fillColor: '#000000',
       outline: false,
-      zIndex: 3
+      zIndex: 33
     }
   )
 
   sectorCollection.add(innerCircle)
 
-  // Средний центральный круг
+  // Средний круг
   const middleCircle = new ymaps.Circle(
-    [[x, y], 6],
+    [[x, y], 3],
     {
       hintContent: 'Дождевальная установка № ' + index
     },
@@ -61,15 +68,15 @@ export function getSectorCollection(
       fill: true,
       fillColor: '#ffffff',
       outline: false,
-      zIndex: 2
+      zIndex: 32
     }
   )
 
   sectorCollection.add(middleCircle)
 
-  // Средний центральный круг
+  // Внешний круг
   const externalCircle = new ymaps.Circle(
-    [[x, y], 6],
+    [[x, y], 3],
     {
       hintContent: 'Дождевальная установка № ' + index
     },
@@ -77,8 +84,8 @@ export function getSectorCollection(
       geodesic: true,
       fill: false,
       strokeColor: '#000000',
-      strokeWidth: 3,
-      zIndex: 1
+      strokeWidth: 5,
+      zIndex: 31
     }
   )
 
@@ -91,32 +98,81 @@ export function getSectorCollection(
       hintContent: 'Дождевальная установка № ' + index
     },
     {
-      fill: false, // Заливка
-      // fillColor: '#FF0000', // Цвет заливки
-      strokeColor: color, // Цвет границ
-      opacity: 1, // Прозрачность
-      strokeWidth: 10 // Ширина линии
+      fill: false,
+      strokeColor: color,
+      opacity: 1,
+      strokeWidth: 10,
+      zIndex: 10
     }
   )
 
   sectorCollection.add(outline)
 
   // Пролёт
-  const points = [...getOutlinePoints(center, radius - 1, spanAngle, spanAngle)]
+  const spanPoints = [
+    ...getOutlinePoints(center, radius - 1, spanAngle, spanAngle)
+  ]
 
   const span = new ymaps.Polyline(
-    [...points],
+    [...spanPoints],
     {
       hintContent: 'Дождевальная установка № ' + index
     },
     {
       strokeColor: '#000000',
       strokeWidth: 6,
-      zIndex: 1
+      zIndex: 10
     }
   )
 
   sectorCollection.add(span)
+
+  // Маркер начала орошаемой поверхности
+  const irrigationMarkerPoints = [
+    ...getOutlinePoints(center, radius - 1, irrigationPoint, irrigationPoint)
+  ]
+
+  const irrigationMarker = new ymaps.Polyline(
+    [...irrigationMarkerPoints],
+    {
+      hintContent: 'Дождевальная установка № ' + index
+    },
+    {
+      strokeColor: '#cccc00',
+      strokeWidth: 3,
+      opacity: 0.8,
+      zIndex: 2
+    }
+  )
+
+  sectorCollection.add(irrigationMarker)
+
+  // Орошаемая поверхность
+  const irrigationSurface = new ymaps.Polygon(
+    [[...getOutlinePoints(center, radius - 1, irrigationStart, irrigationEnd)]],
+    {
+      hintContent: 'Дождевальная установка № ' + index
+    },
+    {
+      fill: true,
+      fillColor: '#d1d1d1',
+      outline: false,
+      opacity: 0.6,
+      strokeWidth: 1,
+      zIndex: 1
+    }
+  )
+
+  sectorCollection.add(irrigationSurface)
+
+  // Обработка нажатия левой кнопкой мыши
+  sectorCollection.events.add('click', (e: any) => {
+    if (!ballon.state) {
+      const coords = e.get('coords')
+      ballon.index = index
+      ballon.coords = coords
+    }
+  })
 
   return sectorCollection
 }

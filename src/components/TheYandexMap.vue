@@ -2,6 +2,7 @@
 import { onMounted, reactive } from 'vue'
 import { watch } from 'vue'
 import { getSectorCollection } from '@/services/getSectorCollection'
+import { fromGPSDegToDecimalDeg } from '@/services/fromGPSDegToDecimalDeg'
 import { ballon } from '@/store/index'
 
 let myMap: any
@@ -9,7 +10,10 @@ let myBalloon: any
 
 interface sprinkler {
   num: number // Порядковый номер дождевальной установки
-  center: { x: number; y: number } // Центр установки
+  center: {
+    x: { deg: number; min: number; sec: number }
+    y: { deg: number; min: number; sec: number }
+  } // Центр установки
   radius: number // Предельный радиус установки, м
   startOutline: number // Начальный угол контура, градус
   endOutline: number // Конечный угол угол контура, градус
@@ -25,7 +29,10 @@ interface sprinkler {
 let sprinklers: sprinkler[] = reactive([
   {
     num: 1,
-    center: { x: 44.976785, y: 42.001052 },
+    center: {
+      x: { deg: 44, min: 58, sec: 36 },
+      y: { deg: 42, min: 0, sec: 4 }
+    },
     radius: 50,
     startOutline: 200,
     endOutline: 90,
@@ -35,7 +42,7 @@ let sprinklers: sprinkler[] = reactive([
     irrigationEnd: 2,
     color: '#ff0000',
     state: `
-    <p>Состояние: <span style="color: red; font-weight: bold;">НЕИСПРАВНА</span></p> 
+    <p>Состояние: <span style="color: red; font-weight: bold;">НЕИСПРАВНА</span></p>
     <p>Угловая скорость, град/мин: 0</p>
     <p>Направление движения: –</p>
     <p>Начало работы: --:--</p>
@@ -46,7 +53,10 @@ let sprinklers: sprinkler[] = reactive([
   },
   {
     num: 2,
-    center: { x: 44.975705, y: 42.000173 },
+    center: {
+      x: { deg: 44, min: 58, sec: 33 },
+      y: { deg: 42, min: 0, sec: 1 }
+    },
     radius: 50,
     startOutline: 270,
     endOutline: 90,
@@ -56,7 +66,7 @@ let sprinklers: sprinkler[] = reactive([
     irrigationEnd: 24,
     color: '#90ee90',
     state: `
-    <p>Состояние: <span style="color: #00cc00; font-weight: bold;">ИСПРАВНА</span></p> 
+    <p>Состояние: <span style="color: #00cc00; font-weight: bold;">ИСПРАВНА</span></p>
     <p>Угловая скорость, град/мин: 5</p>
     <p>Направление движения: против часовой стрелки</p>
     <p>Начало работы: 09:11</p>
@@ -67,7 +77,10 @@ let sprinklers: sprinkler[] = reactive([
   },
   {
     num: 3,
-    center: { x: 44.975705, y: 42.00193 },
+    center: {
+      x: { deg: 44, min: 58, sec: 33 },
+      y: { deg: 42, min: 0, sec: 7 }
+    },
     radius: 50,
     startOutline: 0,
     endOutline: 360,
@@ -77,7 +90,7 @@ let sprinklers: sprinkler[] = reactive([
     irrigationEnd: 2,
     color: '#00bfff',
     state: `
-    <p>Состояние: <span style="color: #00cc00; font-weight: bold;">ИСПРАВНА</span></p> 
+    <p>Состояние: <span style="color: #00cc00; font-weight: bold;">ИСПРАВНА</span></p>
     <p>Угловая скорость, град/мин: 5</p>
     <p>Направление движения: по часовой стрелке</p>
     <p>Начало работы: 09:15</p>
@@ -175,8 +188,12 @@ watch(sprinklers, newValue => {
   <div class="container">
     <div class="row">
       <div class="title narrow">№ п/п</div>
-      <div class="title wide">Координата X</div>
-      <div class="title wide">Координата Y</div>
+      <div class="title narrow">x°</div>
+      <div class="title narrow">x'</div>
+      <div class="title narrow">x"</div>
+      <div class="title narrow">y°</div>
+      <div class="title narrow">y'</div>
+      <div class="title narrow">y"</div>
       <div class="title narrow">Радиус</div>
       <div class="title narrow">Нач. угол контура</div>
       <div class="title narrow">Кон. угол контура</div>
@@ -189,8 +206,30 @@ watch(sprinklers, newValue => {
 
     <div v-for="sprinkler in sprinklers" class="row">
       <input class="input narrow" type="number" v-model="sprinkler.num" />
-      <input class="input wide" type="number" v-model="sprinkler.center.x" />
-      <input class="input wide" type="number" v-model="sprinkler.center.y" />
+      <input
+        class="input narrow"
+        type="number"
+        v-model="sprinkler.center.x.deg" />
+      <input
+        class="input narrow"
+        type="number"
+        v-model="sprinkler.center.x.min" />
+      <input
+        class="input narrow"
+        type="number"
+        v-model="sprinkler.center.x.sec" />
+      <input
+        class="input narrow"
+        type="number"
+        v-model="sprinkler.center.y.deg" />
+      <input
+        class="input narrow"
+        type="number"
+        v-model="sprinkler.center.y.min" />
+      <input
+        class="input narrow"
+        type="number"
+        v-model="sprinkler.center.y.sec" />
       <input class="input narrow" type="number" v-model="sprinkler.radius" />
       <input
         class="input narrow"
@@ -252,7 +291,7 @@ watch(sprinklers, newValue => {
 }
 
 .map {
-  width: 1500px;
+  width: 1740px;
   height: 600px;
 }
 

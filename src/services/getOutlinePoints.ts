@@ -1,3 +1,5 @@
+import { fromGPSDegToDecimalDeg } from '@/services/fromGPSDegToDecimalDeg'
+
 /**
  * @param center объект с координатами центра
  * @param radius радиус
@@ -6,13 +8,18 @@
  * @returns массив координат контура метки
  */
 export function getOutlinePoints(
-  center: { x: number; y: number },
+  center: {
+    x: { deg: number; min: number; sec: number }
+    y: { deg: number; min: number; sec: number }
+  },
   radius: number,
   startOutline: number,
   endOutline: number
 ) {
   const outcome = []
-  const { x, y } = center
+  // const { x, y } = center
+  const x = fromGPSDegToDecimalDeg(center.x.deg, center.x.min, center.x.sec)
+  const y = fromGPSDegToDecimalDeg(center.y.deg, center.y.min, center.y.sec)
 
   let firstSide: number
 

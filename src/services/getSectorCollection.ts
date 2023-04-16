@@ -1,4 +1,5 @@
 import { getOutlinePoints } from '@/services/getOutlinePoints'
+import { fromGPSDegToDecimalDeg } from '@/services/fromGPSDegToDecimalDeg'
 import { ballon } from '@/store'
 
 /**
@@ -16,7 +17,10 @@ import { ballon } from '@/store'
  */
 export function getSectorCollection(
   index: number,
-  center: { x: number; y: number },
+  center: {
+    x: { deg: number; min: number; sec: number }
+    y: { deg: number; min: number; sec: number }
+  },
   radius: number,
   startOutline: number,
   endOutline: number,
@@ -34,7 +38,11 @@ export function getSectorCollection(
     }
   )
 
-  const { x, y } = center
+  // const { x, y } = center
+  const x = fromGPSDegToDecimalDeg(center.x.deg, center.x.min, center.x.sec)
+  const y = fromGPSDegToDecimalDeg(center.y.deg, center.y.min, center.y.sec)
+
+  // const x = fromGPSDegToDecimalDeg(center.x.deg)
 
   if (color.length !== 7) {
     color = '#000000'
@@ -91,7 +99,7 @@ export function getSectorCollection(
 
   sectorCollection.add(externalCircle)
 
-  // Контур метки 
+  // Контур метки
   const outline = new ymaps.Polygon(
     [[...getOutlinePoints(center, radius, startOutline, endOutline)]],
     {

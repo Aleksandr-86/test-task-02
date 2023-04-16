@@ -33,7 +33,7 @@
 
 <div align="center">
   <a href="https://test-task-02.vercel.app/">
-    <img src="https://user-images.githubusercontent.com/96790009/232298101-fb476414-9d98-4307-9411-a6315dda38f7.png"/>
+    <img src="https://user-images.githubusercontent.com/96790009/232309701-e7c24038-c695-478e-8f86-60b595ece0e1.png"/>
   </a>
 </div>
 

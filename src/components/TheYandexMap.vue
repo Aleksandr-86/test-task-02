@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue'
-import { watch } from 'vue'
+import { onMounted, reactive, watch } from 'vue'
 import { getSectorCollection } from '@/services/getSectorCollection'
-import { fromGPSDegToDecimalDeg } from '@/services/fromGPSDegToDecimalDeg'
 import { ballon } from '@/store/index'
 
 let myMap: any
@@ -54,16 +52,16 @@ let sprinklers: sprinkler[] = reactive([
   {
     num: 2,
     center: {
-      x: { deg: 44, min: 58, sec: 33 },
-      y: { deg: 42, min: 0, sec: 1 }
+      x: { deg: 44, min: 58, sec: 31 },
+      y: { deg: 42, min: 0, sec: 0 }
     },
-    radius: 50,
+    radius: 100,
     startOutline: 270,
     endOutline: 90,
-    spanAngle: 0,
-    irrigationPoint: 24,
-    irrigationStart: 19,
-    irrigationEnd: 24,
+    spanAngle: 288,
+    irrigationPoint: 68,
+    irrigationStart: 288,
+    irrigationEnd: 68,
     color: '#90ee90',
     state: `
     <p>Состояние: <span style="color: #00cc00; font-weight: bold;">ИСПРАВНА</span></p>
@@ -84,14 +82,14 @@ let sprinklers: sprinkler[] = reactive([
     radius: 50,
     startOutline: 0,
     endOutline: 360,
-    spanAngle: 164,
-    irrigationPoint: 2,
-    irrigationStart: 340,
-    irrigationEnd: 2,
+    spanAngle: 213,
+    irrigationPoint: 45,
+    irrigationStart: 45,
+    irrigationEnd: 213,
     color: '#00bfff',
     state: `
     <p>Состояние: <span style="color: #00cc00; font-weight: bold;">ИСПРАВНА</span></p>
-    <p>Угловая скорость, град/мин: 5</p>
+    <p>Угловая скорость, град/мин: 7</p>
     <p>Направление движения: по часовой стрелке</p>
     <p>Начало работы: 09:15</p>
     <p>В работе: 00:24</p>

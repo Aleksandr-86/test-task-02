@@ -1,5 +1,6 @@
 import { getOutlinePoints } from '@/services/getOutlinePoints'
 import { fromGPSDegToDecimalDeg } from '@/services/fromGPSDegToDecimalDeg'
+import { getLineCoords } from '@/services/getLineCoords'
 import { ballon } from '@/store'
 
 /**
@@ -38,11 +39,8 @@ export function getSectorCollection(
     }
   )
 
-  // const { x, y } = center
   const x = fromGPSDegToDecimalDeg(center.x.deg, center.x.min, center.x.sec)
   const y = fromGPSDegToDecimalDeg(center.y.deg, center.y.min, center.y.sec)
-
-  // const x = fromGPSDegToDecimalDeg(center.x.deg)
 
   if (color.length !== 7) {
     color = '#000000'
@@ -117,9 +115,7 @@ export function getSectorCollection(
   sectorCollection.add(outline)
 
   // Пролёт
-  const spanPoints = [
-    ...getOutlinePoints(center, radius - 1, spanAngle, spanAngle)
-  ]
+  const spanPoints = [...getLineCoords(center, radius - 1, spanAngle)]
 
   const span = new ymaps.Polyline(
     [...spanPoints],
@@ -137,7 +133,7 @@ export function getSectorCollection(
 
   // Метка начала орошаемой поверхности
   const irrigationMarkerPoints = [
-    ...getOutlinePoints(center, radius - 1, irrigationPoint, irrigationPoint)
+    ...getLineCoords(center, radius - 1, irrigationPoint)
   ]
 
   const irrigationMarker = new ymaps.Polyline(
